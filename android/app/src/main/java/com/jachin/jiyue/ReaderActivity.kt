@@ -15,7 +15,7 @@ import com.jachin.jiyue.util.MarkdownParser
 
 /**
  * 文件阅读器页面
- * WebView 加载 empty.html，通过 runJavaScript 桥接注入内容
+ * 直接使用 loadDataWithBaseURL 加载生成的 HTML，不依赖 asset 文件
  */
 class ReaderActivity : AppCompatActivity() {
 
@@ -27,8 +27,6 @@ class ReaderActivity : AppCompatActivity() {
     private var fileType: String = "html"
     private var isDark: Boolean = false
     private var fontSizeLevel: Int = 1 // 0=小 1=中 2=大
-    private var pageReady: Boolean = false
-    private var htmlContent: String = ""
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,22 +60,11 @@ class ReaderActivity : AppCompatActivity() {
             allowContentAccess = true
             mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
-        binding.webView.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                pageReady = true
-                if (htmlContent.isNotEmpty()) {
-                    injectContent()
-                }
-            }
-        }
+        binding.webView.webViewClient = WebViewClient()
         binding.webView.webChromeClient = WebChromeClient()
         binding.webView.setBackgroundColor(
             if (isDark) android.graphics.Color.BLACK else android.graphics.Color.WHITE
         )
-
-        // 加载空壳页面
-        binding.webView.loadUrl("file:///android_asset/empty.html")
     }
 
     private fun setupClickListeners() {
@@ -142,7 +129,35 @@ class ReaderActivity : AppCompatActivity() {
     }
 
     /**
-     * 读取文件并生成 HTML 内容
+     * 生成完整的 HTML 字符串
+     * 对于 MD 文件: MarkdownParser.parse() 已生成完整 HTML
+     * 对于 HTML 文件: 需要包装 wrapHtmlContent 的片段为完整 HTML
+     */
+    private fun generateHtml(): String {
+        val content = FileUtils.readFileContent(filePath)
+        return if (fileType == "md") {
+            markdownParser.parse(content, isDark, getFontSize())
+        } else {
+            // wrapHtmlContent 返回的是片段，需要包装成完整 HTML
+            val fragment = markdownParser.wrapHtmlContent(content, isDark, getFontSize())
+            if (fragment.trimStart().startsWith("<!DOCTYPE", ignoreCase = true) ||
+                fragment.trimStart().startsWith("<html", ignoreCase = true)) {
+                fragment
+            } else {
+                val bgColor = if (isDark) "#000000" else "#FFFFFF"
+                val textColor = if (isDark) "#FFFFFF" else "#000000"
+                "<!DOCTYPE html><html><head><meta charset=\"UTF-8\">" +
+                "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">" +
+                "<style>body{background:$bgColor;color:$textColor;padding:16px;margin:0;" +
+                "font-family:-apple-system,BlinkMacSystemFont,sans-serif;}</style>" +
+                "</head><body>$fragment</body></html>"
+            }
+        }
+    }
+
+    /**
+     * 读取文件并直接加载到 WebView
+     * 使用 loadDataWithBaseURL，不依赖 asset 文件和 JS 注入
      */
     private fun loadContent() {
         binding.layoutLoading.visibility = View.VISIBLE
@@ -150,19 +165,18 @@ class ReaderActivity : AppCompatActivity() {
         binding.layoutError.visibility = View.GONE
 
         try {
-            val content = FileUtils.readFileContent(filePath)
-            htmlContent = if (fileType == "html") {
-                markdownParser.wrapHtmlContent(content, isDark, getFontSize())
-            } else {
-                markdownParser.parse(content, isDark, getFontSize())
-            }
-
+            val html = generateHtml()
             binding.layoutLoading.visibility = View.GONE
             binding.webView.visibility = View.VISIBLE
 
-            if (pageReady) {
-                injectContent()
-            }
+            // 直接加载生成的 HTML，不需要 empty.html 和 JS 注入
+            binding.webView.loadDataWithBaseURL(
+                null,
+                html,
+                "text/html",
+                "UTF-8",
+                null
+            )
         } catch (e: Exception) {
             binding.layoutLoading.visibility = View.GONE
             binding.layoutError.visibility = View.VISIBLE
@@ -172,28 +186,19 @@ class ReaderActivity : AppCompatActivity() {
     }
 
     /**
-     * 通过 JS 注入内容到 WebView
-     */
-    private fun injectContent() {
-        if (htmlContent.isEmpty()) return
-        // JSONObject.quote() 正确转义并加引号，确保 JS 语法正确
-        val escaped = org.json.JSONObject.quote(htmlContent)
-        val js = "__setContent($escaped);"
-        binding.webView.evaluateJavascript(js, null)
-    }
-
-    /**
      * 刷新内容（字号/深色模式切换）
+     * 重新生成 HTML 并重新加载
      */
     private fun refreshContent() {
         try {
-            val content = FileUtils.readFileContent(filePath)
-            htmlContent = if (fileType == "html") {
-                markdownParser.wrapHtmlContent(content, isDark, getFontSize())
-            } else {
-                markdownParser.parse(content, isDark, getFontSize())
-            }
-            injectContent()
+            val html = generateHtml()
+            binding.webView.loadDataWithBaseURL(
+                null,
+                html,
+                "text/html",
+                "UTF-8",
+                null
+            )
         } catch (_: Exception) {}
     }
 }
