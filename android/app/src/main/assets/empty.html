@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC", sans-serif; }
+    body { padding: 16px; }
+    img { max-width: 100%; height: auto; }
+    pre { overflow-x: auto; }
+    code { font-family: "SF Mono", Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <!-- 内容由 Android 端通过 evaluateJavascript 注入 -->
+</body>
+<script>
+  // 供 Android 端调用的桥接函数
+  function __setContent(html) {
+    document.body.innerHTML = html;
+    window.scrollTo(0, 0);
+  }
+</script>
+</html>

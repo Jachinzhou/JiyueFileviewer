@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <!-- 顶部导航栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/card_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/page_title"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnImport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/btn_select_file"
+                app:fabSize="mini"
+                app:backgroundTint="@color/app_primary"
+                app:tint="@android:color/white"
+                app:srcCompat="@android:drawable/ic_input_add"
+                app:elevation="0dp"
+                app:maxImageSize="24dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/divider_color" />
+    </LinearLayout>
+
+    <!-- 区块标题 -->
+    <TextView
+        android:id="@+id/tvSectionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/history_section"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_secondary"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
+
+    <!-- 内容区：RecyclerView 或 空状态 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- 文件列表 -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFileList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/card_white"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clipToPadding="false"
+            android:visibility="gone" />
+
+        <!-- 加载指示器 -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <!-- 空状态 -->
+        <LinearLayout
+            android:id="@+id/layoutEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📄"
+                android:textSize="48sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_state"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_hint"
+                android:textSize="12sp"
+                android:textColor="@color/text_tertiary"
+                android:layout_marginTop="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSelectFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_select_file"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/app_primary"
+                app:cornerRadius="24dp"
+                android:layout_marginTop="24dp" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

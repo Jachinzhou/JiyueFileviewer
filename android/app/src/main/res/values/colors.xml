@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_primary">#0A59F7</color>
+    <color name="app_primary_dark">#317AF7</color>
+
+    <color name="bg_primary">#F5F5F7</color>
+    <color name="bg_dark">#000000</color>
+    <color name="bg_dark_surface">#1E1E1E</color>
+
+    <color name="text_primary">#E6000000</color>
+    <color name="text_primary_dark">#FFFFFFFF</color>
+    <color name="text_secondary">#99000000</color>
+    <color name="text_secondary_dark">#99FFFFFF</color>
+    <color name="text_tertiary">#80000000</color>
+    <color name="text_tertiary_dark">#80FFFFFF</color>
+
+    <color name="md_icon_green">#64BB5C</color>
+    <color name="md_icon_green_dark">#5BA854</color>
+    <color name="html_icon_blue">#0A59F7</color>
+    <color name="html_icon_blue_dark">#317AF7</color>
+
+    <color name="star_yellow">#ED6F21</color>
+    <color name="star_yellow_dark">#DB6B42</color>
+
+    <color name="card_white">#FFFFFF</color>
+    <color name="card_dark">#1E1E1E</color>
+
+    <color name="divider_color">#0C000000</color>
+    <color name="divider_dark">#0CFFFFFF</color>
+
+    <color name="skeleton_color">#0C000000</color>
+    <color name="skeleton_color_dark">#0CFFFFFF</color>
+
+    <color name="nav_separator">#0C000000</color>
+    <color name="nav_separator_dark">#0CFFFFFF</color>
+
+    <color name="error_color">#E84026</color>
+    <color name="success_color">#64BB5C</color>
+</resources>

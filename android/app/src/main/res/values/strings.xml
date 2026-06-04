@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">即阅</string>
+    <string name="page_title">即阅</string>
+    <string name="history_section">最近</string>
+    <string name="empty_state">还没有文件</string>
+    <string name="empty_hint">选择 Markdown 或 HTML 文件开始阅读</string>
+    <string name="btn_select_file">选择文件</string>
+    <string name="file_read_error">文件读取失败</string>
+    <string name="unsupported_type">不支持的文件类型</string>
+    <string name="file_type_md">Markdown</string>
+    <string name="file_type_html">HTML</string>
+</resources>

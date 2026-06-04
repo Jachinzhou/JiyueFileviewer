@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <!-- 顶部导航栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/card_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
+
+            <!-- 返回按钮 -->
+            <FrameLayout
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="‹"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/app_primary" />
+            </FrameLayout>
+
+            <!-- 文件名 -->
+            <TextView
+                android:id="@+id/tvFileName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp" />
+
+            <!-- 更多按钮 -->
+            <FrameLayout
+                android:id="@+id/btnMore"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="•••"
+                    android:textSize="18sp"
+                    android:textColor="@color/app_primary" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/divider_color" />
+    </LinearLayout>
+
+    <!-- 底部工具栏（字号 + 深色模式） -->
+    <LinearLayout
+        android:id="@+id/layoutToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/card_white"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- 字号 小 -->
+            <FrameLayout
+                android:id="@+id/btnFontSmall"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <TextView
+                    android:id="@+id/tvFontSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="A−"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary" />
+            </FrameLayout>
+
+            <!-- 字号 中 -->
+            <FrameLayout
+                android:id="@+id/btnFontMedium"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <TextView
+                    android:id="@+id/tvFontMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="A"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/app_primary" />
+            </FrameLayout>
+
+            <!-- 字号 大 -->
+            <FrameLayout
+                android:id="@+id/btnFontLarge"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <TextView
+                    android:id="@+id/tvFontLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="A+"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_secondary" />
+            </FrameLayout>
+
+            <!-- 深色模式 -->
+            <FrameLayout
+                android:id="@+id/btnDarkMode"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <TextView
+                    android:id="@+id/tvDarkMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="☾"
+                    android:textSize="24sp"
+                    android:textColor="@color/text_secondary" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/divider_color" />
+    </LinearLayout>
+
+    <!-- 主内容区 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- 骨架屏 / 加载态 -->
+        <LinearLayout
+            android:id="@+id/layoutLoading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@color/card_white"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/skeleton_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/skeleton_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/skeleton_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/skeleton_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/skeleton_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/skeleton_color" />
+        </LinearLayout>
+
+        <!-- 错误态 -->
+        <LinearLayout
+            android:id="@+id/layoutError"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/card_white"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="😵"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/tvError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/file_read_error"
+                android:textSize="16sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBackError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="返回"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp" />
+        </LinearLayout>
+
+        <!-- WebView -->
+        <android.webkit.WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+    </FrameLayout>
+</LinearLayout>
