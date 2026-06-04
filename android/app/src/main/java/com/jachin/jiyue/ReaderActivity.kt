@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -57,6 +58,9 @@ class ReaderActivity : AppCompatActivity() {
             setSupportZoom(true)
             loadWithOverviewMode = true
             useWideViewPort = true
+            allowFileAccess = true
+            allowContentAccess = true
+            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
         binding.webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -172,8 +176,10 @@ class ReaderActivity : AppCompatActivity() {
      */
     private fun injectContent() {
         if (htmlContent.isEmpty()) return
-        val escaped = org.json.JSONObject.wrap(htmlContent).toString()
-        binding.webView.evaluateJavascript("__setContent($escaped);", null)
+        // JSONObject.quote() 正确转义并加引号，确保 JS 语法正确
+        val escaped = org.json.JSONObject.quote(htmlContent)
+        val js = "__setContent($escaped);"
+        binding.webView.evaluateJavascript(js, null)
     }
 
     /**
